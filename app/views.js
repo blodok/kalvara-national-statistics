@@ -138,6 +138,7 @@ export function renderEconomy() {
   const sectors = donutChart({
     slices: D.GDP_SECTORS.map((s) => ({ label: s.sector, value: s.share })),
     centre: '61.4%',
+    centreSub: 'services',
   });
   const inflation = barChart({
     bars: D.INFLATION_BY_YEAR.map((i) => ({ label: String(i.year), value: i.rate })),
@@ -233,6 +234,7 @@ export function renderHealth() {
   const causes = donutChart({
     slices: D.CAUSES_OF_DEATH.map((c) => ({ label: c.cause, value: c.share })),
     centre: '31.2%',
+    centreSub: 'circulatory',
   });
   const rows = D.LIFE_EXPECTANCY.map((l) => `
     <tr><td>${l.year}</td><td>${l.all.toFixed(1)}</td><td>${l.female.toFixed(1)}</td><td>${l.male.toFixed(1)}</td></tr>`).join('');

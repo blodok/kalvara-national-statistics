@@ -16,7 +16,7 @@ function niceMax(max) {
 
 // Line chart with a filled area under the line. points: [{x: label, y: number}].
 export function lineChart({ points, yLabel, width = 640, height = 300, format = (v) => String(v) }) {
-  const padL = 56, padR = 14, padT = 14, padB = 30;
+  const padL = 74, padR = 14, padT = 14, padB = 30;
   const values = points.map((p) => p.y);
   const min = Math.min(0, ...values);
   const max = niceMax(Math.max(...values) * 1.05);
@@ -47,7 +47,7 @@ export function lineChart({ points, yLabel, width = 640, height = 300, format = 
 
 // Vertical bar chart. bars: [{label, value, alt?}].
 export function barChart({ bars, yLabel, width = 640, height = 300, format = (v) => String(v) }) {
-  const padL = 56, padR = 14, padT = 14, padB = 44;
+  const padL = 74, padR = 14, padT = 14, padB = 44;
   const max = niceMax(Math.max(...bars.map((b) => b.value)) * 1.08);
   const innerW = width - padL - padR;
   const innerH = height - padT - padB;
@@ -90,7 +90,7 @@ export function hbarChart({ bars, width = 640, rowH = 34, format = (v) => String
 }
 
 // Donut chart with a centre label. slices: [{label, value}].
-export function donutChart({ slices, centre, width = 300, height = 300 }) {
+export function donutChart({ slices, centre, centreSub = '', width = 300, height = 300 }) {
   const cx = width / 2, cy = height / 2, r = 105, hole = 62;
   const total = slices.reduce((s, x) => s + x.value, 0);
   const colors = ['#14524f', '#1f7a6d', '#d98a1f', '#7fb5ab', '#c9a86a', '#8a9a94'];
@@ -106,8 +106,11 @@ export function donutChart({ slices, centre, width = 300, height = 300 }) {
     const ix0 = cx + hole * Math.cos(a0), iy0 = cy + hole * Math.sin(a0);
     return `<path d="M${x0.toFixed(1)},${y0.toFixed(1)} A${r},${r} 0 ${large} 1 ${x1.toFixed(1)},${y1.toFixed(1)} L${ix1.toFixed(1)},${iy1.toFixed(1)} A${hole},${hole} 0 ${large} 0 ${ix0.toFixed(1)},${iy0.toFixed(1)} Z" fill="${colors[i % colors.length]}"><title>${esc(s.label)}: ${s.value}%</title></path>`;
   }).join('');
+  const legend = '<div class="legend">' + slices.map((s, i) =>
+    `<span><span class="swatch" style="background:${colors[i % colors.length]}"></span>${esc(s.label)} ${s.value}%</span>`).join('') + '</div>';
   return `<svg class="chart" viewBox="0 0 ${width} ${height}" role="img" aria-label="Donut chart">`
     + parts
     + `<text class="donut-label" x="${cx}" y="${cy - 4}" text-anchor="middle">${esc(centre)}</text>`
-    + `<text class="tick" x="${cx}" y="${cy + 16}" text-anchor="middle">of gross value added</text></svg>`;
+    + `<text class="tick" x="${cx}" y="${cy + 16}" text-anchor="middle">${esc(centreSub)}</text></svg>`
+    + legend;
 }
