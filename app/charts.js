@@ -19,7 +19,7 @@ export function lineChart({ points, yLabel, width = 640, height = 300, format = 
   const padL = 74, padR = 14, padT = 14, padB = 30;
   const values = points.map((p) => p.y);
   const min = Math.min(0, ...values);
-  const max = niceMax(Math.max(...values) * 1.05);
+  const max = niceMax(Math.max(...values));
   const innerW = width - padL - padR;
   const innerH = height - padT - padB;
   const x = (i) => padL + (i / (points.length - 1)) * innerW;
