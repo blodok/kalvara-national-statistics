@@ -1,0 +1,10 @@
+year,life_expectancy_all,life_expectancy_female,life_expectancy_male
+2015,76.9,79.8,74.1
+2018,77.4,80.2,74.7
+2021,77.8,80.6,75.1
+2023,78.3,81.0,75.7
+2025,78.6,81.3,76.0
+indicator,value_2025
+health_spending_share_of_gdp_pct,8.9
+doctors_per_1000,3.8
+hospital_beds_per_1000,4.6
